@@ -1,6 +1,12 @@
 import Head from 'next/head'
+import { useState } from 'react';
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
+import Script from 'next/script'
+import { Carousel } from "react-bootstrap";
+import { items } from '../utils/images.json';
+
+// Image imports
 import loadingIcon from 'public/loadingIcon.png';
 import ecoSurroundingsLogo from 'public/ecoSurroundingsLogo.png';
 import plyboo from 'public/Plyboo.jpg';
@@ -9,11 +15,19 @@ import durat from 'public/Durat.jpg';
 
 {/*  <link rel="stylesheet" type="text/css"  href='style.css' />*/}
 
-import styles from '@/styles/Home.module.css'
+import styles from 'styles/Home.module.css'
+import bStyles from 'styles/Boostrap.module.css'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const { bootstrap } = items;
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex: any, e: any) => {
+    setIndex(selectedIndex);
+  };
   return (
     <>
     <Head>
@@ -26,21 +40,12 @@ export default function Home() {
 
       {/*<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700%7CPT+Serif:400,700' rel='stylesheet' type='text/css'>*/}
     </Head>
-    {/*<table className="doc-loader">*/}
-    {/*  <tbody>*/}
-    {/*  <tr>*/}
-    {/*    <td>*/}
-    {/*      <Image src={loadingIcon} alt="Loading..."/>*/}
-    {/*    </td>*/}
-    {/*  </tr>*/}
-    {/*  </tbody>*/}
-    {/*</table>*/}
     <div className="body-wrapper">
       <div className="content-1330 header-holder center-relative">
         <div className="header-logo left">
           <h1 className="site-title">
             <a href="index.html">
-              <Image src={ecoSurroundingsLogo} alt="EcoSurroundings Logo" className="main-logo" />
+              <Image src={ecoSurroundingsLogo} alt="EcoSurroundings Logo" className={styles.mainLogo} />
             </a>
           </h1>
         </div>
@@ -79,20 +84,17 @@ export default function Home() {
 
           <div className="content-1530 center-relative block slider image-slider-margin">
             <div className="image-slider-wrapper">
-              <ul id="slider1" className="image-slider slides center-text">
-                <li>
-                  <Image src={plyboo} alt="Plyboo wood" />
-                </li>
-                <li>
-                  <Image src={arborWood} alt="Arbor Wood" />
-                </li>
-                <li>
-                  <Image src={durat} alt="Durat Wood" />
-                </li>
-              </ul>
-              <div className="slider1_pagination carousel_pagination left"></div>
+              <Carousel activeIndex={index} onSelect={handleSelect} style={{width: '75%', margin: 'auto'}}>
+                {[{imageUrl: plyboo, title: 'Plyboo'}, {imageUrl: arborWood, title: 'Arbor Wood'}, {imageUrl: durat, title: 'Durat'}].map((item, idx) => (
+                  <Carousel.Item key={idx} className={bStyles.itemP} interval={4000}>
+                    <Image src={item.imageUrl} alt="slides" />
+                    <Carousel.Caption className={bStyles.caption}>
+                      <h3>{item.title}</h3>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
             </div>
-            <div className="clear"></div>
           </div>
 
           <div className="content-1330 center-relative block">
@@ -119,20 +121,6 @@ export default function Home() {
         </article>
       </div>
     </div>
-
-    {/*<script src="js/jquery.js"></script>*/}
-    {/*<script src='js/jquery.fitvids.js'></script>*/}
-    {/*<script src='js/jquery.smartmenus.min.js'></script>*/}
-    {/*<script src='js/imagesloaded.pkgd.js'></script>*/}
-    {/*<script src='js/isotope.pkgd.js'></script>*/}
-    {/*<script src='js/jquery.carouFredSel-6.0.0-packed.js'></script>*/}
-    {/*<script src='js/jquery.mousewheel.min.js'></script>*/}
-    {/*<script src='js/jquery.touchSwipe.min.js'></script>*/}
-    {/*<script src='js/jquery.easing.1.3.js'></script>*/}
-    {/*<script src='js/jquery.prettyPhoto.js'></script>*/}
-    {/*<script src='js/jquery.ba-throttle-debounce.min.js'></script>*/}
-    {/*<script src='js/jquery.nicescroll.min.js'></script>*/}
-    {/*<script src='js/main.js'></script>*/}
     </>
   )
 }
