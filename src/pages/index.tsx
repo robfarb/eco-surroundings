@@ -7,7 +7,6 @@ import { Carousel } from "react-bootstrap";
 import { items } from '../utils/images.json';
 
 // Image imports
-import loadingIcon from 'public/loadingIcon.png';
 import ecoSurroundingsLogo from 'public/ecoSurroundingsLogo.png';
 import plyboo from 'public/Plyboo.jpg';
 import arborWood from 'public/ArborWood.jpeg';
